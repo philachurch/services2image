@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+body {
+  font-family: "sans-serif";
+}
+
+table, td, th {
+  border: 1px solid black;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th, td {
+  padding: 7px;
+  text-align: left;
+}
+
+.confirmed {
+    background-color: #0d0;
+    padding: 10px;
+}
+
+.unconfirmed {
+    background-color: #f2f210;
+    padding: 10px;
+}
+
+.declined {
+    background-color: #ff3030;
+    padding: 10px;
+}
+</style>
+</head>
+<body>
+
+<p>Synced: {{ time }}</p>
+
+<table>
+    <tr>
+        <th class="confirmed">Confirmed</th>
+        <th class="unconfirmed">Unconfirmed</th>
+        <th class="declined">Declined</th>
+    </tr>
+</table>
+<br>
+ <table>
+  <tr>
+    <th>Date</th>
+    <th>Service Type</th>
+    <th>Service Title</th>
+    <th>Positions</th>
+  </tr>
+  {% for service in services %}
+        <tr>
+            <td>{{ service['date'] }}</td>
+            <td>{{ service['type'] }}</td>
+            <td>{{ service['title'] }}</td>
+            <td>
+                {% for member in service['members'] %}
+                    {% if member['status'] == "C" %}
+                    <p class="confirmed">{{ member['position'] }} - {{ member['name'] }}</p>
+                    {% endif %}
+                    {% if member['status'] == "U" %}
+                    <p class="unconfirmed">{{ member['position'] }} - {{ member['name'] }}</p>
+                    {% endif %}
+                    {% if member['status'] == "D" %}
+                    <p class="declined">{{ member['position'] }} - {{ member['name'] }}</p>
+                    {% endif %}
+                {% endfor %}
+            </td>
+        </tr>
+  {% endfor %}
+</table>
+
+</body>
+</html> 

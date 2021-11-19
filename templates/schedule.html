@@ -59,7 +59,11 @@ th, td {
         <tr>
             <td>{{ service['date'] }}</td>
             <td>{{ service['type'] }}</td>
+            {% if service['title'] %}
             <td>{{ service['title'] }}</td>
+            {% else %}
+            <td></td>
+            {% endif %}
             <td>
                 {% for member in service['members'] %}
                     {% if member['status'] == "C" %}

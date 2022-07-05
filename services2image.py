@@ -20,8 +20,9 @@ schedule_template = env.get_template('schedule.html')
 
 def epoch(date):
     """Return epoch time for a planning center date
+    sort_date example: 2022-07-23T10:46:00Z
     """
-    return datetime.strptime(date, '%B %d, %Y').timestamp()
+    return datetime.strptime(date, '%Y-%m-%dT%H:%M:%S%z').timestamp()
 
 
 def get_service_types():
@@ -76,8 +77,9 @@ def get_services(filter_position):
     for service_type in get_service_types():
         for plan in get_plans(service_type['id']):
             members = get_team_members(service_type['id'], plan['id'], filter_position)
+            sort_date = plan['attributes']['sort_date']
             date = plan['attributes']['dates']
-            epoch_time = epoch(date)
+            epoch_time = epoch(sort_date)
             service_title = plan['attributes']['title']
             stype = service_type['attributes']['name']
             future_dates.append({'date': date,
